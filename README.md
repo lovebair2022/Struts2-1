@@ -12,7 +12,7 @@
 
 	strut2在以前MVC架构中所处的位置
 
-<center>![](https://raw.githubusercontent.com/faithyee/Struts2/master/img/2.Strut2.bmp})</center>
+<center>![](https://raw.githubusercontent.com/faithyee/Struts2/master/img/2.Strut2.bmp)</center>
 	
 	因此，Strut2是为了固定编码步骤，提高编码效率。
 	
@@ -57,9 +57,14 @@
 3.Struts2的历史
 
 
+	由传统Struts1和WebWork两个经典框架发展而来
 
-
-
+	Strust2 核心功能
+	* 允许POJO（Plain Old Java Objects）对象 作为Action
+	* Action的execute 方法不再与Servlet API耦合，更易测试
+	* 支持更多视图技术（JSP、FreeMarker、Velocity）
+	* 基于Spring AOP思想的拦截器机制，更易扩展
+	* 更强大、更易用输入校验功能
 
 
 
@@ -67,18 +72,50 @@
 4.搭建Struts2的开发环境
 
 	1、拷贝jar包
-	参考发行包中的struts2-blank.war中的jar
-	 
+		参考发行包中的struts2-blank.war中的jar
+
+		Struts运行必要jar包
+	
+		   struts2-core-2.3.1.1.jar：Struts 2框架的核心类库
+		   xwork-core-2.3.1.1.jar：Command模式框架,WebWork和Struts2都基于xwork 
+		   ognl-3.0.3.jar：对象图导航语言(Object Graph Navigation Language), struts2框架通过其读写对象的属性
+		   freemarker-2.3.18.jar：Struts 2的UI标签的模板使用FreeMarker编写
+		   commons-logging-1.1.x.jar：ASF出品的日志包，Struts 2框架使用这个日志包来支持Log4J和JDK 1.4+的日志记录。
+		   commons-fileupload-1.2.2.jar： 文件上传组件，2.1.6版本后需要加入此文件
+		   commons-io-2.0.1.jar：传文件依赖的jar包
+		   commons-lang-2.5.jar：对java.lang包的增强
+		 
 	2、配置核心过滤器（控制器）
+
+		参考发行包中的struts2-blank.war中的web.xml
+	    <filter>
+	        <filter-name>struts2</filter-name>
+	        <filter-class>org.apache.struts2.dispatcher.ng.filter.StrutsPrepareAndExecuteFilter</filter-class>
+	    </filter>
+	
+	    <filter-mapping>
+	        <filter-name>struts2</filter-name>
+	        <url-pattern>/*</url-pattern>
+	    </filter-mapping>
+
 	 
 	3、建立struts.xml的配置文件，放在应用的类路径的顶端（开发中：src目录下）
+
+	参考发行包中的struts2-blank.war中的struts.xml
+
+	<?xml version="1.0" encoding="UTF-8"?>
+	<!DOCTYPE struts PUBLIC
+		"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+		"http://struts.apache.org/dtds/struts-2.3.dtd">
+	
+	<struts>
+		<!-- 开启开发模式 -->
+	    <constant name="struts.devMode" value="true" />
+	</struts>
 	 
 	
 	验证是否成功：部署到Tomcat中，启动，只要没有报错，就是OK。
 	
-
-
-
 
 	5.写struts配置文件没有提示的问题
 	
