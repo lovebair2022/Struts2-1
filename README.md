@@ -7,12 +7,12 @@
 	以前MVC架构
 
 
-<center>![](http://image17-c.poco.cn/mypoco/myphoto/20160205/21/17860070920160205215922061_640.jpg?985x400_160)</center>
+<center>![](https://raw.githubusercontent.com/faithyee/Struts2/master/img/1.%E4%B8%89%E5%B1%82%E6%9E%B6%E6%9E%84MVC.bmp)</center>
 
 
 	strut2在以前MVC架构中所处的位置
 
-<center>![](http://image17-c.poco.cn/mypoco/myphoto/20160205/22/17860070920160205220710086_640.jpg?1071x521_160})</center>
+<center>![](https://raw.githubusercontent.com/faithyee/Struts2/master/img/2.Strut2.bmp})</center>
 	
 	因此，Strut2是为了固定编码步骤，提高编码效率。
 	
