@@ -12,7 +12,7 @@
 
 	strut2在以前MVC架构中所处的位置
 
-<center>![](https://raw.githubusercontent.com/faithyee/Struts2/master/img/2.Strut2.bmp})</center>
+<center>![](https://raw.githubusercontent.com/faithyee/Struts2/master/img/2.Strut2.bmp)</center>
 	
 	因此，Strut2是为了固定编码步骤，提高编码效率。
 	
