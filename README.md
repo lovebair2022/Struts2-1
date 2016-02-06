@@ -117,14 +117,16 @@
 	验证是否成功：部署到Tomcat中，启动，只要没有报错，就是OK。
 	
 
-	5.写struts配置文件没有提示的问题
+	4.写struts配置文件里写标签没有提示的问题
+
+		1.文件可以在strut2-core-2.3.15.3.jar文件里去找strut2-2.3.dtd
 	
-		1、找到dtd，放到某一个目录中。WEB-INF/dtd
+		2.找到dtd，放到某一个目录中。WEB-INF/dtd
 	
-	
+		3.在项目的配置Preferences里的xml catalog去让dtd的文件目录关联到strut2.xml里的url:https://struts.apache.org/dtds/struts-2.3.dtd
 
 
-
+	5.具体看项目day26_01_struts2HelloWorld
  
 5.Struts2的执行流程全图（面试）
  
