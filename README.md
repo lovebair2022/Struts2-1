@@ -179,9 +179,6 @@
 		7：Action执行完毕ActionInvocation，根据struts.xml配置找到对应的返回结果
 
 
-
-
-
 6.Struts2的配置文件和加载顺序
 
 	1、default.properties 该文件保存在 struts2-core-2.3.7.jar 中 org.apache.struts2中
@@ -195,51 +192,70 @@
 	1和2和3都在框架或插件提供的jar中，不需要我们直接改。
 
 
-
-
-
-
-
-
-
 7.struts.xml配置文件的内容标签
 
 	1、package：
+
 	作用：分模块化开发。
 	属性：
-	name：包的名称。唯一。必须的
-	extends：一般都需要直接或间接继承一个叫做struts-default（struts-default.xml中有定义）的包名。因为，struts框架的一些核心功能配置都在此处。
-	abstract：如果为true，说明是一个抽象包。说明让别人去继承。没有任何action子元素的包就可以定义为抽象包。
-	namespace：名称空间。一般以"/"开头，和动作名称一起，构成了用户的访问路径。
+
+		name：包的名称。唯一。必须的
+
+		extends：一般都需要直接或间接继承一个叫做struts-defaul
+		（struts-default.xml中有定义）的包名。因为，struts框架的一些核心功能配置都在此处。
+
+		abstract：如果为true，说明是一个抽象包。说明让别人去继承。没有任何action子元素的包就可以定义为抽象包。
+
+		namespace：名称空间。一般以"/"开头，和动作名称一起，构成了用户的访问路径。
+
 	比如：
+
+<center>![](https://raw.githubusercontent.com/faithyee/Struts2/master/img/7.namespace.bmp)</center>
 	 
 	
 	专题：package中的namesapce属性
+
 	2、action：
+
 	作用：配置动作。用户什么请求，执行哪个类，及哪个类的方法。
+
 	属性：
-	name：动作名称。必须的。包中要唯一。
-	class:动作类的全名。可以不指定，默认值是
-	com.opensymphony.xwork2.ActionSupport
-	 
-	method：执行的动作类的动作方法。可以不指定，默认值是execute。
-	 
+
+		name：动作名称。必须的。包中要唯一。
+
+		class:动作类的全名。可以不指定，默认值是com.opensymphony.xwork2.ActionSupport
+		 
+		method：执行的动作类的动作方法。可以不指定，默认值是execute。
+		 
 	
 	说明：可以覆盖掉默认的动作类。一般我们不需要这么做。
 	 
 	3、constant配置：
+
 	推荐覆盖常量办法：在struts.xml中使用constant标签。
+
 	作用：配置常量的值。
+
 	struts2的常量都在default.properties配置文件中做了定义（struts2-core.jar/  org.apache.struts2包中）
+
 	常用的常量：
-	struts.i18n.reload = true 国际化配置文件更改后，自动加载。
-	struts.configuration.xml.reload = true struts配置文件更改后，自动加载
-	struts.devMode = false 如果为true，开启开发模式 .实际运行应该为false
-	struts.i18n.encoding=UTF-8 应用使用的编码。
-	struts.action.extension=action,,  struts2框架真正执行的url地址后缀。多个用逗号分隔
-	struts.serve.static.browserCache=true 静态资源告知浏览器不要缓存。
-	Expires:-1;Cache-Control:no-cache;Pragma:no-cache
+
+		struts.i18n.reload = true 国际化配置文件更改后，自动加载。
+	
+		struts.configuration.xml.reload = true struts配置文件更改后，自动加载
+	
+		struts.devMode = false 如果为true，开启开发模式 .实际运行应该为false
+	
+		struts.i18n.encoding=UTF-8 应用使用的编码。
+	
+		struts.action.extension=action,,  struts2框架真正执行的url地址后缀。多个用逗号分隔
+	
+		struts.serve.static.browserCache=true 静态资源告知浏览器不要缓存。
+	
+		Expires:-1;Cache-Control:no-cache;Pragma:no-cache
+
 	4、包含其他的配置文件
+
 	<include file="user.xml"></include>
 	
 
