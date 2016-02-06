@@ -257,9 +257,7 @@
 	
 		struts.action.extension=action,,  struts2框架真正执行的url地址后缀。多个用逗号分隔
 	
-		struts.serve.static.browserCache=true 静态资源告知浏览器不要缓存。
-	
-		Expires:-1;Cache-Control:no-cache;Pragma:no-cache
+		struts.serve.static.browserCache=true 静态资源告知浏览器不要缓存。(Expires:-1;Cache-Control:no-cache;Pragma:no-cache)
 
 	4、包含其他的配置文件
 
