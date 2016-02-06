@@ -226,12 +226,17 @@
 		name：动作名称。必须的。包中要唯一。
 
 		class:动作类的全名。可以不指定，默认值是com.opensymphony.xwork2.ActionSupport
+
+<center>![](https://raw.githubusercontent.com/faithyee/Struts2/master/img/9.actionsupport.bmp)</center>
 		 
 		method：执行的动作类的动作方法。可以不指定，默认值是execute。
-		 
+	
+<center>![](https://raw.githubusercontent.com/faithyee/Struts2/master/img/10.execute.bmp)</center>	 
 	
 	说明：可以覆盖掉默认的动作类。一般我们不需要这么做。
 	 
+<center>![](https://raw.githubusercontent.com/faithyee/Struts2/master/img/11.cover.bmp)</center>	 
+
 	3、constant配置：
 
 	推荐覆盖常量办法：在struts.xml中使用constant标签。
@@ -260,10 +265,6 @@
 
 	<include file="user.xml"></include>
 	
-
-
-
-
 
 
 
