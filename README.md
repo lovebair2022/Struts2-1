@@ -129,28 +129,54 @@
 	5.具体看项目day26_01_struts2HelloWorld
  
 5.Struts2的执行流程全图（面试）
+
+>版本1：
+
+<center>![](https://raw.githubusercontent.com/faithyee/Struts2/master/img/4.strut2procedure.jpg)</center>
+
+>版本2：
+
+<center>![](https://raw.githubusercontent.com/faithyee/Struts2/master/img/5.strut2procedure2.bmp)</center>
+
+<center>![](https://raw.githubusercontent.com/faithyee/Struts2/master/img/6.strut2procedure3.bmp)</center>
  
  
 	Struts2的工作流程:
-	一：客户端提交一个HttpServletRequest请求，（.action或JSP页面)
-	二：请求被提交到一系列的Filter过滤器，如ActionContextCleanUp和FileterDispather等。
-	三：FilterDispatcher是Struts2的控制核心，它通常是过滤器链中的最后一个过滤器。
-	四：请求发到FilterDispathcher后，FilterDispatcher询问ActionMapper是否需要调用某个Action来处理这个Request（一般根据URL后缀是否为.action来判断）
-	五：如果ActionMapper决定需要调用某个Action，FilterDispatcher则把请求交到ActionProxy,由其进行处理。
-	六：ActionProxy通过ConfigurationManager（它会访问Struts.xml询问创建的配置文件，找到需要调用的Action类）
-	七：ActionProxy创建一个ActionInvocation实例，而ActionInvocation通过代理模式调用Action（在调用之后会根据配置文件加载相关的所有Interceptor拦截器）
-	八：Action执行完毕后，返回一个result字符串，此时再按相反的顺序通过Interceptor拦截器
-	九：最后ActionInvocation负责根据struts.xml中配置的result，决定进行下一步输出
+
+		1：客户端提交一个HttpServletRequest请求，（.action或JSP页面)
+
+		2：请求被提交到一系列的Filter过滤器，如ActionContextCleanUp和FileterDispather等。
+
+		3：FilterDispatcher是Struts2的控制核心，它通常是过滤器链中的最后一个过滤器。
+
+		4：请求发到FilterDispathcher后，FilterDispatcher询问ActionMapper是否需要调用某个Action来处理这个Request（一般根据URL后缀是否为.action来判断）
+
+		5：如果ActionMapper决定需要调用某个Action，FilterDispatcher则把请求交到ActionProxy,由其进行处理。
+
+		6：ActionProxy通过ConfigurationManager（它会访问Struts.xml询问创建的配置文件，找到需要调用的Action类）
+
+		7：ActionProxy创建一个ActionInvocation实例，而ActionInvocation通过代理模式调用Action（在调用之后会根据配置文件加载相关的所有Interceptor拦截器）
+
+		8：Action执行完毕后，返回一个result字符串，此时再按相反的顺序通过Interceptor拦截器
+
+		9：最后ActionInvocation负责根据struts.xml中配置的result，决定进行下一步输出
 
 
 	简化版：
-	①：客户端初始化一个指向Servlet容器的请求
-	②：请求经过系列过滤器，FilterDispatcher被调用
-	③：ActionMapper决定需要调用某个Action，FilterDispatcher把请求的处理交给ActionProxy
-	④：ActionProxy通过ConfigurationManager询问框架的配置文件找到需要调用的Action类
-	⑤：ActionProxy创建一个ActionInvocation实例
-	⑥：ActionInvocation调用、回调Action的execute方法
-	⑦：Action执行完毕ActionInvocation，根据struts.xml配置找到对应的返回结果
+
+		1：客户端初始化一个指向Servlet容器的请求
+
+		2：请求经过系列过滤器，FilterDispatcher被调用
+
+		3：ActionMapper决定需要调用某个Action，FilterDispatcher把请求的处理交给ActionProxy
+
+		4：ActionProxy通过ConfigurationManager询问框架的配置文件找到需要调用的Action类
+
+		5：ActionProxy创建一个ActionInvocation实例
+
+		6：ActionInvocation调用、回调Action的execute方法
+
+		7：Action执行完毕ActionInvocation，根据struts.xml配置找到对应的返回结果
 
 
 
