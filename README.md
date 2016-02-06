@@ -213,7 +213,9 @@
 <center>![](https://raw.githubusercontent.com/faithyee/Struts2/master/img/7.namespace.bmp)</center>
 	 
 	
-	专题：package中的namesapce属性
+	专题：package中的namesapce属性(难点)
+
+<center>![](https://raw.githubusercontent.com/faithyee/Struts2/master/img/8.namespacetopic.bmp)</center>
 
 	2、action：
 
