@@ -315,15 +315,22 @@ struts2的常量都在default.properties配置文件中做了定义（struts2-co
  
 4、DMI：Dynamic Method Invocation（动态方法调用）（了解）
 当前配置：没有指定动作方法
+
+<center>![](https://raw.githubusercontent.com/faithyee/Struts2/master/img/15.nodmi1.bmp)</center>
  
 url：customer!addCustomer
 
 错误：
+
+<center>![](https://raw.githubusercontent.com/faithyee/Struts2/master/img/16.nodmi2.bmp)</center>
  
 说明struts2框架默认是不允许执行动态方法调用的。如果要用，需要配置一个常量：
+
+	<constant name="struts.enable.DynamicMethodInvocation" value="true"></constant>
  
 
 危险：容易把动作方法暴露给客户端
+
 5、默认的action
 
 
