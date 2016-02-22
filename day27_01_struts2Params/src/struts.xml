@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+	"http://struts.apache.org/dtds/struts-2.3.dtd">
+
+<struts>
+	<!-- 开启开发模式 -->
+    <constant name="struts.devMode" value="true" />
+    <package name="p1" extends="struts-default">
+    	<action name="act1" class="com.itheima.action.PersonAction">
+    		<!-- Person.setNickname("游客") -->
+    		<param name="nickname">游客</param>
+    	</action>
+    	<action name="act2" class="com.itheima.action.StudentAction" method="save"/>
+    	<action name="act3" class="com.itheima.action.CustomerAction" method="save"/>
+    	<action name="act4" class="com.itheima.action.Demo1Action" method="save"/>
+    	<action name="act5" class="com.itheima.action.Demo2Action" method="save"/>
+    </package>
+</struts>

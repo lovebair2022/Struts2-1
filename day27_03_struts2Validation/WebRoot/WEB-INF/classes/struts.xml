@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+	"http://struts.apache.org/dtds/struts-2.3.dtd">
+
+<struts>
+	<!-- 开启开发模式 -->
+    <constant name="struts.devMode" value="true" />
+<!--     <constant name="struts.locale" value="en_US" /> -->
+    <package name="p1" extends="struts-default">
+    	<action name="save" class="com.itheima.action.PersonAction" method="save">
+    		<result name="input">/01regist.jsp</result>
+    	</action>
+    	<action name="update" class="com.itheima.action.PersonAction" method="update">
+    		<result name="input">/02update.jsp</result>
+    	</action>
+    	<action name="findAll" class="com.itheima.action.PersonAction" method="findAll">
+    	</action>
+    </package>
+    <package name="p2" namespace="/student" extends="struts-default">
+    	<action name="regist" class="com.itheima.action.StudentAction" method="regist">
+    		<result>/success.jsp</result>
+    		<result name="input">/student.jsp</result>
+    	</action>
+    </package>
+</struts>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE validators PUBLIC
+  		"-//Apache Struts//XWork Validator 1.0.3//EN"
+  		"http://struts.apache.org/dtds/xwork-validator-1.0.3.dtd">
+<validators>
+	<!-- 形式一:给一个字段指定多个验证器
+	<field name="name">
+		<field-validator type="requiredstring">
+			<message>名字不能为空哦</message>
+		</field-validator>
+	</field>
+	-->
+	<!-- 形式二：验证器验证字段。还可以验证非字段的验证 -->
+	<validator type="requiredstring">
+		<param name="fieldName">name</param>
+		<message>亲，名字你怎么空着呢</message>
+	</validator>
+</validators>

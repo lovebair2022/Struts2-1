@@ -548,3 +548,70 @@ stream：下载用的（文件上传和下载时再议）
 
 plainText：以纯文本的形式展现内容
 
+
+## Struts2_02 ##
+
+### 1.自定义结果类型 ###
+
+项目：day27_00_struts2Results
+
+1、编写一个类，实现com.opensymphony.xwork2.Result接口。
+
+	public class CaptchaResult implements Result {
+ 
+	在该方法中可以拿到ServletAPI去完成你的功能
+
+2、声明自定义的结果类型：先声明后使用
+
+	<struts>
+		<!-- 开启开发模式 -->
+	    <constant name="struts.devMode" value="true" />
+	    <package name="mystruts-default"  extends="struts-default">
+	    	<!-- 声明结果类型 -->
+	    	<result-types>
+	    		<result-type name="captcha" class="com.itheima.results.CaptchaResult"></result-type>
+	    	</result-types>
+	    </package>
+	    <package name="p1" extends="mystruts-default">
+	    	<action name="captcha">
+	    		<result name="success" type="captcha">
+	    			<!-- 给结果类型注入参数
+	    			<param name="height">10</param>
+	    			<param name="width">3</param>
+	    			 -->
+	    		</result>
+	    	</action>
+	    </package>
+	    
+	</struts>
+ 
+3、使用
+
+	<package name="p1" extends="mystruts-default">
+		<action name="captcha">
+			<result name="success" type="captcha">
+				<!-- 给结果类型注入参数
+				<param name="height">10</param>
+				<param name="width">3</param>
+				 -->
+			</result>
+		</action>
+	</package>
+ 
+	访问url：http://localhost:8080/day27_00_struts2Results/01login.jsp
+
+小技巧：自定义的结果视图，大家都要用时
+
+<center>![](https://raw.githubusercontent.com/faithyee/Struts2/master/img/17.cover.bmp)</center>	 
+ 
+### 2.封装请求参数（很重要） ###
+
+### 3.类型转换（明白，开发中几乎不写） ###
+
+### 4.数据校验（经常做） ###
+
+### 5.国际化（鸡肋） ###
+
+### 6.Struts2中的拦截器（很重要） ###
+
+### 7.文件的上传和下载 ###
