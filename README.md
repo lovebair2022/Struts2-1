@@ -342,39 +342,209 @@ url：customer!addCustomer
 
 ### 9.Servlet规范相关实例的获取 ###
 
-	1、Struts2的一大特点：与ServletAPI解耦了。
-	2、获取Servlet有关的类
-		方式一：（暂时记住。推荐的）
-	 
-		方式二：（麻烦。框架注入进来）
-	 
-	怎么做到的？实际上是一个拦截器来做的。
-	<interceptor name="servletConfig" class="org.apache.struts2.interceptor.ServletConfigInterceptor"/>
-	
-	
+1、Struts2的一大特点：与ServletAPI解耦了。
 
+2、获取Servlet有关的类
+	
+	方式一：（暂时记住。推荐的）
+
+		public class Demo1Action extends ActionSupport {
+			public String execute(){
+				ServletActionContext.getPageContext();
+				ServletActionContext.getRequest();
+				ServletActionContext.getResponse();
+				ServletActionContext.getServletContext();
+				return NONE;
+			}
+		}
+
+	 
+	方式二：（麻烦。框架注入进来）实现接口
+	
+		//演示Servlet有关的对象的获取
+		public class Demo2Action extends ActionSupport implements ServletRequestAware,ServletResponseAware {
+			private HttpServletRequest request;
+			private HttpServletResponse response;
+			public String execute(){
+				System.out.println(request);
+				System.out.println(response);
+				return NONE;
+			}
+			//在调用动作方法前，框架先调用该方法。把request对象注入进来
+			public void setServletRequest(HttpServletRequest request) {
+				 this.request = request;
+			}
+			public void setServletResponse(HttpServletResponse response) {
+				this.response = response;
+			}
+		}
+		 
+		原理：怎么做到的？实际上是一个拦截器来做的。（在执行动作方法之前先会执行拦截器）
+		<interceptor name="servletConfig" class="org.apache.struts2.interceptor.ServletConfigInterceptor"/>
+
+		//拦截器
+		public class ServletConfigInterceptor extends AbstractInterceptor implements StrutsStatics {
+		
+		    private static final long serialVersionUID = 605261777858676638L;
+		
+		    public String intercept(ActionInvocation invocation) throws Exception {
+		        final Object action = invocation.getAction();//得到当前的动作类
+		        final ActionContext context = invocation.getInvocationContext();
+		
+		        if (action instanceof ServletRequestAware) {//判断当前的动作有没有实现ServletRequestAware这个接口
+		            HttpServletRequest request = (HttpServletRequest) context.get(HTTP_REQUEST);
+		            ((ServletRequestAware) action).setServletRequest(request);
+		        }
+		
+		        if (action instanceof ServletResponseAware) {
+		            HttpServletResponse response = (HttpServletResponse) context.get(HTTP_RESPONSE);
+		            ((ServletResponseAware) action).setServletResponse(response);
+		        }
+		
+		        if (action instanceof ParameterAware) {
+		            ((ParameterAware) action).setParameters((Map)context.getParameters());
+		        }
+		
+		        if (action instanceof ApplicationAware) {
+		            ((ApplicationAware) action).setApplication(context.getApplication());
+		        }
+		        
+		        if (action instanceof SessionAware) {
+		            ((SessionAware) action).setSession(context.getSession());
+		        }
+		        
+		        if (action instanceof RequestAware) {
+		            ((RequestAware) action).setRequest((Map) context.get("request"));
+		        }
+		
+		        if (action instanceof PrincipalAware) {
+		            HttpServletRequest request = (HttpServletRequest) context.get(HTTP_REQUEST);
+		            if(request != null) {
+		                // We are in servtlet environment, so principal information resides in HttpServletRequest
+		                ((PrincipalAware) action).setPrincipalProxy(new ServletPrincipalProxy(request));
+		            }
+		        }
+		        if (action instanceof ServletContextAware) {
+		            ServletContext servletContext = (ServletContext) context.get(SERVLET_CONTEXT);
+		            ((ServletContextAware) action).setServletContext(servletContext);
+		        }
+		        return invocation.invoke();
+		    }
+		}
+		
+			
+			
+		
 
 
  
 ### 10.Struts2中的结果视图 ###
 
-	1、展现结果
-	通过struts.xml中result配置来管理的。
-	2、result元素
-	作用：配置一个结果视图
-	属性：
-	name：逻辑视图名称。对应的是动作方法的返回值。
-	可以不写。默认值是success。
+1、展现结果
+
+通过struts.xml中result配置来管理的。
+
+	<?xml version="1.0" encoding="UTF-8"?>
+	<!DOCTYPE struts PUBLIC
+		"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+		"http://struts.apache.org/dtds/struts-2.3.dtd">
+	
+	<struts>
+		<!-- 开启开发模式 -->
+	    <constant name="struts.devMode" value="true" />
+	    <package name="p1" extends="struts-default">
+	    	<action name="act1">
+	<!--     		<result type="chain">act2</result> -->
+	    		<result type="chain">
+	    			<!-- 相当于：调用chain对应的类的setActionName("act2")方法 -->
+	    			<param name="namespace">/user</param>
+	    			<param name="actionName">act2</param>
+	    		</result>
+	    	</action>
+	    
+	    	<action name="save" class="com.itheima.action.Demo1Action" method="save">
+	    		<result name="success">
+	    			<param name="location">/success.jsp</param>
+	    		</result>
+	    		<result name="error">/error.jsp</result>
+	    	</action>
+	    	
+	    </package>
+	    <package name="p2" namespace="/user" extends="struts-default">
+	    	<action name="act2">
+	    		<result type="plainText">/demo.jsp</result>
+	    	</action>
+	    </package>
+	</struts>
+
+
+
+	public class Demo1Action extends ActionSupport {
+		public String save(){
+			//调用service
+			try{
+	//			int i=1/0;
+				return SUCCESS;
+			}catch(Exception e){
+				e.printStackTrace();
+				return ERROR;
+			}
+		}
+	}
+
+
+2、result元素<result>
+
+作用：配置一个结果视图
+
+属性：
+
+	name：逻辑视图名称。对应的是动作方法的返回值。可以不写。默认值是success。
+
 	type：指定结果类型。默认值是dispatcher,就是转发。
-	
-	问题：dispatcher从哪里来的？struts-default.xml中有定义。
-	 
-	3、常用的结果视图的类型
-		dispatcher:默认结果类型。请求转发到一个页面。
-		redirect：请求重定向到一个页面。
-		chain:请求转发到另一个动作。
-	 
-		redirectAction：重定向到另外一个动作
-		stream：下载用的（文件上传和下载时再议）
-		plainText：以纯文本的形式展现内容
-	
+
+问题：dispatcher从哪里来的？struts-default.xml中有定义。
+
+	<result-types>
+	    <result-type name="chain" class="com.opensymphony.xwork2.ActionChainResult"/>
+	    <result-type name="dispatcher" class="org.apache.struts2.dispatcher.ServletDispatcherResult" default="true"/>
+	    <result-type name="freemarker" class="org.apache.struts2.views.freemarker.FreemarkerResult"/>
+	    <result-type name="httpheader" class="org.apache.struts2.dispatcher.HttpHeaderResult"/>
+	    <result-type name="redirect" class="org.apache.struts2.dispatcher.ServletRedirectResult"/>
+	    <result-type name="redirectAction" class="org.apache.struts2.dispatcher.ServletActionRedirectResult"/>
+	    <result-type name="stream" class="org.apache.struts2.dispatcher.StreamResult"/>
+	    <result-type name="velocity" class="org.apache.struts2.dispatcher.VelocityResult"/>
+	    <result-type name="xslt" class="org.apache.struts2.views.xslt.XSLTResult"/>
+	    <result-type name="plainText" class="org.apache.struts2.dispatcher.PlainTextResult" />
+	</result-types>
+
+
+ 
+3、常用的结果视图的类型(属性type)
+
+dispatcher:默认结果类型。请求转发到一个页面。
+
+redirect：请求重定向到一个页面。
+
+chain:请求转发到另一个动作。
+ 
+    <package name="p1" extends="struts-default">
+	    	<action name="act1">
+				<result type="chain">act2</result>
+	    	</action>
+	    
+	    	<action name="save" class="com.itheima.action.Demo1Action" method="save">
+	    		<result name="success">/success.jsp</result>
+	    		<result name="error">/error.jsp</result>
+	    	</action>
+	    	
+	    </package>
+
+	访问url：http://localhost:8080/day26_03_struts2Results/act1
+
+redirectAction：重定向到另外一个动作
+
+stream：下载用的（文件上传和下载时再议）
+
+plainText：以纯文本的形式展现内容
+
