@@ -602,7 +602,7 @@ plainText：以纯文本的形式展现内容
 
 小技巧：自定义的结果视图，大家都要用时
 
-<center>![](https://raw.githubusercontent.com/faithyee/Struts2/master/img/17.cover.bmp)</center>	 
+<center>![](https://raw.githubusercontent.com/faithyee/Struts2/master/img/17.customresult.png)</center>	 
  
 ### 2.封装请求参数（很重要） ###
 
