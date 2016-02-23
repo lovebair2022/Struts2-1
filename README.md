@@ -808,10 +808,75 @@ plainText：以纯文本的形式展现内容
 2.2封装集合或Map的数据（用的较少）
 
 	a、封装集合，批量添加时用
+
+		public class Demo1Action {
+			//批量添加时
+			private Collection<Student> stus = new ArrayList<Student>();
+		
+			public Collection<Student> getStus() {
+				return stus;
+			}
+		
+			public void setStus(Collection<Student> stus) {
+				this.stus = stus;
+			}
+			public String save(){
+				for(Student s:stus){
+					System.out.println(s);
+				}
+				return "none";
+			}
+		}
+
+		//在表单里批量添加数据
+	    <form action="${pageContext.request.contextPath}/act4" method="post">
+	    	用户名：<input type="text" name="stus[0].username"/><br/>
+	    	密码：<input type="text" name="stus[0].password"/><br/>
+	    	昵称：<input type="text" name="stus[0].nickname"/><br/>
+	    	<hr/>
+	    	用户名：<input type="text" name="stus[1].username"/><br/>
+	    	密码：<input type="text" name="stus[1].password"/><br/>
+	    	昵称：<input type="text" name="stus[1].nickname"/><br/>
+	    	<input type="submit" value="注册"/>
+	    </form>
+
 	 
 	b、封装到Map中，批量添加时用
- 
 
+		public class Demo2Action {
+			//批量添加时
+			private Map<String, Student> stus = new HashMap<String, Student>();
+		
+			
+			public Map<String, Student> getStus() {
+				return stus;
+			}
+		
+		
+			public void setStus(Map<String, Student> stus) {
+				this.stus = stus;
+			}
+		
+		
+			public String save(){
+				for(Map.Entry<String, Student> me:stus.entrySet()){
+					System.out.println(me.getKey()+":"+me.getValue());
+				}
+				return "none";
+			}
+		}
+
+		//在表单里批量添加数据
+	    <form action="${pageContext.request.contextPath}/act5" method="post">
+	    	用户名：<input type="text" name="stus['s1'].username"/><br/>
+	    	密码：<input type="text" name="stus['s1'].password"/><br/>
+	    	昵称：<input type="text" name="stus['s1'].nickname"/><br/>
+	    	<hr/>
+	    	用户名：<input type="text" name="stus['s2'].username"/><br/>
+	    	密码：<input type="text" name="stus['s2'].password"/><br/>
+	    	昵称：<input type="text" name="stus['s2'].nickname"/><br/>
+	    	<input type="submit" value="注册"/>
+	    </form>
 
 ### 3.类型转换（明白，开发中几乎不写） ###
 
