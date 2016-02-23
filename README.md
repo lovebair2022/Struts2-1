@@ -880,6 +880,82 @@ plainText：以纯文本的形式展现内容
 
 ### 3.类型转换（明白，开发中几乎不写） ###
 
+1、用户所有的输入都是字符串
+
+2、显示出来的都是字符串
+
+	总结：类型转换。String--->其他类型（存数据时）；其他类型----->字符串（显示数据时）
+	
+	Struts2中的类型转换器的继承体系
+
+<center>![](https://raw.githubusercontent.com/faithyee/Struts2/master/img/19convertorSystem.png)</center>
+
+3、自定义类型转换器
+
+	a、编写一个类，继承StrutsTypeConverter
+
+		//自定义类型转换器：
+		//String--->java.util.Date   MM/dd/yyyy
+		//java.util.Date----->String	MM/dd/yyyy
+		public class MyDateConvertor extends StrutsTypeConverter {
+			
+			private DateFormat df = new SimpleDateFormat("MM/dd/yyyy");
+			
+			//String--->java.util.Date   MM/dd/yyyy
+			//values:用户输入的值
+			//toClass:目标类型
+			public Object convertFromString(Map context, String[] values, Class toClass) {
+				if(toClass==Date.class){
+					if(values!=null&&values.length>0){
+						String sdate = values[0];
+						try {
+							return df.parse(sdate);
+						} catch (ParseException e) {
+							throw new RuntimeException(e);
+						}
+					}
+				}
+				return null;
+			}
+			//java.util.Date----->String	MM/dd/yyyy
+			public String convertToString(Map context, Object o) {
+				if(o instanceof Date){
+					Date d = (Date)o;
+					return df.format(d);
+				}
+				return null;
+			}
+		
+		}
+
+	 
+	b、注册类型转换器
+		
+		b.1局部类型转换器：给某个动作用的
+
+			在动作类所在的包中，建立一个“动作类名-conversion.properties”的配置文件，内容如下：
+		 
+<center>![](https://raw.githubusercontent.com/faithyee/Struts2/master/img/20personAction-conversion.properties.png)</center>
+
+		b.2全局类型转换器：大家都来用
+
+			在构建路径的顶端（WEB-INF/classes）目录下建立名称为xwork-conversion.properties的配置文件，按照要转换的目标类型进行转换器的配置。
+		 
+<center>![](https://raw.githubusercontent.com/faithyee/Struts2/master/img/21xwork-conversion.properties.png)</center>
+
+
+4、转换失败时的数据回显和错误提示
+
+	前提：动作类需要继承ActionSupport
+
+	出现转换失败时，由一个名字为conversionError拦截器负责处理的。会把错误信息封装起来，并且转向一个叫做input的逻辑视图（用于回显数据）。
+
+	更改默认的错误提示：
+
+	在动作类的包中，建立一个“动作类名.properties”的配置文件（实际上是一个语言消息包），内容如下：
+	 
+<center>![](https://raw.githubusercontent.com/faithyee/Struts2/master/img/22errorTextProperties.png)</center>
+
 ### 4.数据校验（经常做） ###
 
 ### 5.国际化（鸡肋） ###
