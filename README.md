@@ -606,6 +606,152 @@ plainText：以纯文本的形式展现内容
  
 ### 2.封装请求参数（很重要） ###
 
+>使用框架的意义：提升开发效率。节省的时间去研究业务。
+
+2.1封装请求参数的方式：
+
+	1、用动作类作为模型对象，直接封装请求参数
+
+		a、通过配置文件注入静态（不变）参数
+
+		    <package name="p1" extends="struts-default">
+		    	<action name="act1" class="com.itheima.action.PersonAction">
+		    		<!-- Person.setNickname("游客") -->
+		    		<param name="nickname">游客</param>
+		    	</action>
+		    </package> 
+
+		注：静态参数注入是由一个名字为staticParams拦截器完成的，该拦截器在struts-default.xml里定义。
+
+		b、注入动态（用户输入的<通过jsp里的表单输入的参数>）参数
+
+		    <form action="${pageContext.request.contextPath}/act1" method="post">
+		    	用户名：<input type="text" name="username"/><br/>
+		    	密码：<input type="text" name="password"/><br/>
+		    	昵称：<input type="text" name="nickname"/><br/>
+		    	<input type="submit" value="注册"/>
+		    </form>
+
+			public class PersonAction extends ActionSupport{
+				private String username;
+				private String password;
+				private String nickname;
+				public String getUsername() {
+					return username;
+				}
+				public void setUsername(String username) {
+					this.username = username;
+				}
+				public String getPassword() {
+					return password;
+				}
+				public void setPassword(String password) {
+					this.password = password;
+				}
+				public String getNickname() {
+					return nickname;
+				}
+				public void setNickname(String nickname) {
+					this.nickname = nickname;
+				}
+				public String execute() throws Exception {
+					System.out.println(username+":"+password+":"+nickname);
+					return NONE;
+				}
+				
+			}
+		 
+		编写原则：表单的输入域的名称和动作类中的属性名（getter和setter）保持一致。
+		注：动态参数注入是由一个名字为params拦截器完成的。
+
+	2、动作类和模型对象分离
+ 
+		//模型
+		public class Student {
+			private String username;
+			private String password;
+			private String nickname;
+			public String getUsername() {
+				return username;
+			}
+			public void setUsername(String username) {
+				this.username = username;
+			}
+			public String getPassword() {
+				return password;
+			}
+			public void setPassword(String password) {
+				this.password = password;
+			}
+			public String getNickname() {
+				return nickname;
+			}
+			public void setNickname(String nickname) {
+				this.nickname = nickname;
+			}
+			@Override
+			public String toString() {
+				return "Student [username=" + username + ", password=" + password
+						+ ", nickname=" + nickname + "]";
+			}
+			
+		}
+
+		
+		//动作类
+		public class StudentAction {
+			private Student student = new Student();//效率相对要高一些
+		
+			public Student getStudent() {
+				System.out.println("getStudent");
+				return student;
+			}
+		
+			public void setStudent(Student student) {
+				System.out.println("setStudent");
+				this.student = student;
+			}
+			public String save(){
+				//把表单的数据封装到模型对象中
+				//调用Service把Student的数据保存到数据库中
+				System.out.println(student);
+				return "none";
+			}
+		}
+
+
+		//配置
+    	<action name="act2" class="com.itheima.action.StudentAction" method="save"/>
+
+
+		//页面
+		<form action="${pageContext.request.contextPath}/act2" method="post">
+			用户名：<input type="text" name="student.username"/><br/>
+			密码：<input type="text" name="student.password"/><br/>
+			昵称：<input type="text" name="student.nickname"/><br/>
+			<input type="submit" value="注册"/>
+		</form>
+
+		总结：框架会探测student这个模型是否为空，如果为空，注入他的实例，分别调用该对象的属性，注入值。
+
+	3、（模型和动作分开）模型驱动：ModelDriven
+
+ 
+
+	注：实际上是一个名字为modelDriven拦截器完成的。该拦截器会在调用动作方法前，调用getModel(),得到模型对象，他接着把该模型对象压到了值栈的栈顶。表单的username的值，框架就会调用栈顶对象的setUsername方法。（此处暂时记住）。
+
+ 
+
+	关键点：实现ModelDriven接口；模型对象要自己实例化；
+
+2.2封装集合或Map的数据（用的较少）
+
+	a、封装集合，批量添加时用
+	 
+	b、封装到Map中，批量添加时用
+ 
+
+
 ### 3.类型转换（明白，开发中几乎不写） ###
 
 ### 4.数据校验（经常做） ###
