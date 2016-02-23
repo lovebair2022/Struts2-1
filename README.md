@@ -736,11 +736,72 @@ plainText：以纯文本的形式展现内容
 
 	3、（模型和动作分开）模型驱动：ModelDriven
 
- 
+		public class Customer {
+			private String username;
+			private String password;
+			private String nickname;
+			public String getUsername() {
+				return username;
+			}
+			public void setUsername(String username) {
+				this.username = username;
+			}
+			public String getPassword() {
+				return password;
+			}
+			public void setPassword(String password) {
+				this.password = password;
+			}
+			public String getNickname() {
+				return nickname;
+			}
+			public void setNickname(String nickname) {
+				this.nickname = nickname;
+			}
+			@Override
+			public String toString() {
+				return "Customer [username=" + username + ", password=" + password
+						+ ", nickname=" + nickname + "]";
+			}
+			
+		}
+
+
+		public class CustomerAction implements ModelDriven<Customer>{
+			private Customer customer = new Customer();//一定要new出来
+		
+			public Customer getCustomer() {
+				return customer;
+			}
+		
+			public void setCustomer(Customer customer) {
+				this.customer = customer;
+			}
+			public String save(){
+				System.out.println(customer);
+				return "none";
+			}
+			//调用动作方法前，框架会先调用该方法
+			//不会实例化customer。
+			public Customer getModel() {
+				return customer;
+			}
+		}
+
+
+	    <form action="${pageContext.request.contextPath}/act3" method="post">
+	    	用户名：<input type="text" name="username"/><br/>
+	    	密码：<input type="text" name="password"/><br/>
+	    	昵称：<input type="text" name="nickname"/><br/>
+	    	<input type="submit" value="注册"/>
+	    </form>
+
+
+
 
 	注：实际上是一个名字为modelDriven拦截器完成的。该拦截器会在调用动作方法前，调用getModel(),得到模型对象，他接着把该模型对象压到了值栈的栈顶。表单的username的值，框架就会调用栈顶对象的setUsername方法。（此处暂时记住）。
 
- 
+<center>![](https://raw.githubusercontent.com/faithyee/Struts2/master/img/18modelDriven.png)</center>
 
 	关键点：实现ModelDriven接口；模型对象要自己实例化；
 
