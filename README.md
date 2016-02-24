@@ -958,8 +958,86 @@ plainText：以纯文本的形式展现内容
 
 ### 4.数据校验（经常做） ###
 
+参考项目：day27_03_struts2Validation
+
+4.1校验的方式
+
+	客户端校验：JavaScript
+	服务器端校验：代码
+	实际开发：客户端+服务器端校验
+
+4.2Struts2的服务器校验
+
+>前提：动作类需要继承ActionSupport
+
+验证是由一个名字为validation（声明式校验）的拦截器、workflow（错误提示）完成的
+
+	a、编程式校验：动作类中写代码
+	
+		a.1针对动作类中的所有动作方法进行校验
+
+			在动作类中，覆盖掉validate方法，在方法里写校验逻辑
+
+<center>![](https://raw.githubusercontent.com/faithyee/Struts2/master/img/23validate.png)</center>
+		 
+		a.2针对动作类中的指定方法进行校验
+	
+			方式一：麻烦
+
+<center>![](https://raw.githubusercontent.com/faithyee/Struts2/master/img/24validateMethod1.png)</center>
+			 
+			方式二：使用注解，简单
+		 
+<center>![](https://raw.githubusercontent.com/faithyee/Struts2/master/img/25validateMethod2.png)</center>
+	
+	b、声明式校验（推荐）：写配置文件
+	
+		把校验规则和消息提示放到配置文件中。
+	
+		b.1针对动作类中的所有动作方法进行校验
+	
+			在动作类所在的包中，建立名字为"动作类名-validation.xml"的配置文件，内容如下：
+
+<center>![](https://raw.githubusercontent.com/faithyee/Struts2/master/img/26validateMethod3.png)</center>
+		 
+		b.2针对动作类中的指定方法进行校验  
+	
+			方式一：简单。使用@SkipValidation注解
+		
+			方式二：麻烦。
+			动作类名-动作别名(指struts.xml中动作的名称)-validation.xml
+
+<center>![](https://raw.githubusercontent.com/faithyee/Struts2/master/img/27validateMethod4.png)</center>
+			 
+		
+>专题：Struts2框架提供的内置验证器
+
+xwork-core-2.3.15.3.jar\com\opensymphony\xwork2\validator\validators\default.xml
+
+<center>![](https://raw.githubusercontent.com/faithyee/Struts2/master/img/28validateMethod5.png)</center>
+
+<center>![](https://raw.githubusercontent.com/faithyee/Struts2/master/img/29validateMethod6.png)</center>
+
+		 
+		b.3自定义声明式校验器
+	
+			a、编写一个类，继承FieldValidatorSupport，定义一个基于字段的验证器。
+
+<center>![](https://raw.githubusercontent.com/faithyee/Struts2/master/img/30validateMethod7.png)</center>
+			 
+			b、定义验证器后才能使用。
+			在WEB-INF/classes目录下，建立一个名称为validators.xml的配置文件，内容如下：
+
+<center>![](https://raw.githubusercontent.com/faithyee/Struts2/master/img/31validateMethod8.png)</center>
+			 
+			c、日后就可以在声明式验证中使用了
+
+<center>![](https://raw.githubusercontent.com/faithyee/Struts2/master/img/32validateMethod9.png)</center>
+	
+
 ### 5.国际化（鸡肋） ###
 
 ### 6.Struts2中的拦截器（很重要） ###
 
 ### 7.文件的上传和下载 ###
+ 
