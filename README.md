@@ -1035,9 +1035,71 @@ xwork-core-2.3.15.3.jar\com\opensymphony\xwork2\validator\validators\default.xml
 <center>![](https://raw.githubusercontent.com/faithyee/Struts2/master/img/32validateMethod9.png)</center>
 	
 
-### 5.国际化（鸡肋） ###
+## Struts2_03 ##
 
-### 6.Struts2中的拦截器（很重要） ###
+### 1.国际化（了解） ###
 
-### 7.文件的上传和下载 ###
+1、配置全局国际化消息资源包
+
+	a、配置全局消息资源包
+	 
+<center>![](https://raw.githubusercontent.com/faithyee/Struts2/master/img/33struts_custom_i18n_resources.png)</center>
+
+	b、如何访问
+	
+		1、在动作类中：
+
+			前提，动作类继承ActionSupport
+				
+				public class Demo1Action extends ActionSupport {
+				
+					public String execute() throws Exception {
+						String s = getText("hello");//没有意义
+						System.out.println(s);
+						return NONE;
+					}
+			 
+		2、在页面中：
+
+<center>![](https://raw.githubusercontent.com/faithyee/Struts2/master/img/34struts_custom_i18n_resources1.png)</center>
+	 
+			或者
+
+				<s:text name="hello"></s:text>
+	
+		3、自由指定消息资源包，借助struts2的有关国际化的标签：
+
+<center>![](https://raw.githubusercontent.com/faithyee/Struts2/master/img/35struts_custom_i18n_resources2.png)</center>
+	 
+	
+			如果消息资源包在com.itheima.resources.msg_zh_CN.properties
+
+<center>![](https://raw.githubusercontent.com/faithyee/Struts2/master/img/36struts_custom_i18n_resources3.png)</center>
+
  
+2、配置局部消息资源包 
+
+	一定要经过Action才行：
+	书写规范：在动作类所在包中，建立名字”动作类名-zh-CN.properties”的配置文件。动作类中访问，发现局部的比全局的优先级高。
+	
+	 
+3、包范围的消息资源包
+
+	也得经过action访问 
+	书写有规范的，名称为package_zh_CN.properties,放在类的包中。可以被包中及子包的所有动作类来访问。
+
+
+总结：
+ 
+
+
+
+### 2.Struts2中的拦截器（很重要AOP） ###
+
+### 3.文件的上传和下载（很重要，记住，拦截器和结果类型Stream实现的） ###
+ 
+### 4.OGNL表达式（很重要） ###
+
+### 5.ValueStack(很简要) ###
+
+### 6.Struts2标签 ###
