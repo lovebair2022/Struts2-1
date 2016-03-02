@@ -1081,6 +1081,8 @@ xwork-core-2.3.15.3.jar\com\opensymphony\xwork2\validator\validators\default.xml
 
 	一定要经过Action才行：
 	书写规范：在动作类所在包中，建立名字”动作类名-zh-CN.properties”的配置文件。动作类中访问，发现局部的比全局的优先级高。
+
+<center>![](https://raw.githubusercontent.com/faithyee/Struts2/master/img/37struts_custom_i18n_resources4.png)</center>
 	
 	 
 3、包范围的消息资源包
@@ -1091,10 +1093,41 @@ xwork-core-2.3.15.3.jar\com\opensymphony\xwork2\validator\validators\default.xml
 
 总结：
  
-
+<center>![](https://raw.githubusercontent.com/faithyee/Struts2/master/img/38struts_custom_i18n_resources5.png)</center>
+	
 
 
 ### 2.Struts2中的拦截器（很重要AOP） ###
+
+1、Struts2的很多核心功能都是由拦截器完成的。
+
+
+	staticParam、params、conversionError、modelDriven、validation、workflow、servletConfig等 
+
+2、在执行动作方法前或执行结果后，做拦截处理。AOP编程思想。
+
+ObjectFactory：框架提供的默认的动作类创建工厂，返回的是动作类的代理子类。
+
+<center>![](https://raw.githubusercontent.com/faithyee/Struts2/master/img/39struts2_interceptor1.png)</center>
+ 
+3、自定义拦截器
+
+	a、定义一个类，继承AbstractInterceptor或者实现Interceptor
+
+<center>![](https://raw.githubusercontent.com/faithyee/Struts2/master/img/40struts2_interceptor2.png)</center>
+	 
+	b、在struts.xml中进行定义
+	 
+<center>![](https://raw.githubusercontent.com/faithyee/Struts2/master/img/41struts2_interceptor3.png)</center>
+
+	c、在动作中使用
+
+<center>![](https://raw.githubusercontent.com/faithyee/Struts2/master/img/42struts2_interceptor4.png)</center>
+ 
+4、Struts2框架的拦截器继承体系
+
+<center>![](https://raw.githubusercontent.com/faithyee/Struts2/master/img/43struts2_interceptor5.png)</center>
+ 
 
 ### 3.文件的上传和下载（很重要，记住，拦截器和结果类型Stream实现的） ###
  
