@@ -1130,6 +1130,57 @@ ObjectFactory：框架提供的默认的动作类创建工厂，返回的是动�
  
 
 ### 3.文件的上传和下载（很重要，记住，拦截器和结果类型Stream实现的） ###
+
+1、文件的上传是一个由fileUpload的拦截器实现的。
+
+> 前提：method必须是post；enctype=multipart/form-data;提供type=file的上传输入域
+
+2、单文件上传
+
+	a、定义动作类
+
+<center>![](https://raw.githubusercontent.com/faithyee/Struts2/master/img/44upload1.png)</center>
+	 
+	b、拦截器的参数配置：
+
+		maximumSize：限制上传文件的大小。优先级比全局那个要低
+
+		<param name="fileUpload.allowedExtensions">.bmp,.jpg,.png</param>：限制的文件扩展名
+
+		allowedTypes：限制上传文件的MIME类型。多个类型也是通过逗号分隔。
+
+<center>![](https://raw.githubusercontent.com/faithyee/Struts2/master/img/45upload2.png)</center>
+
+3、多文件上传
+
+	用数组或List
+
+<center>![](https://raw.githubusercontent.com/faithyee/Struts2/master/img/46upload3.png)</center>
+ 
+4、参数配置及不符合要求时的错误提示
+
+	a、如果出现上传失败的情况，框架自动转向一个input的逻辑视图。
+
+	b、更改默认的消息提示：
+	 
+		在哪里？struts2-core.jar org.apache.struts2.struts-message.properties
+
+		改变：配置一个全局消息资源包
+
+<center>![](https://raw.githubusercontent.com/faithyee/Struts2/master/img/47upload4.png)</center>
+ 
+5、文件的下载：结果类型
+
+	a、动作类
+
+<center>![](https://raw.githubusercontent.com/faithyee/Struts2/master/img/48download1.png)</center>
+
+<center>![](https://raw.githubusercontent.com/faithyee/Struts2/master/img/49download2.png)</center>
+	  
+	b、配置stream结果类型
+
+<center>![](https://raw.githubusercontent.com/faithyee/Struts2/master/img/50download3.png)</center>
+
  
 ### 4.OGNL表达式（很重要） ###
 
