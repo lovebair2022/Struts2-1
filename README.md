@@ -1184,6 +1184,22 @@ ObjectFactory：框架提供的默认的动作类创建工厂，返回的是动�
  
 ### 4.OGNL表达式（很重要） ###
 
+>具体看项目day28_03_struts2ognl
+
+1、OGNL是Object Graphic Navigation Language（对象图导航语言）的缩写，
+它是一个开源项目
+
+2、OGNL相对其它表达式语言具有下面几大优势
+
+	前提：在Struts2用OGNL表达式，需要用到标签。
+
+	*	支持对象方法调用，如xxx.doSomeSpecial();
+	*	支持类静态的方法调用和值访问
+	*	支持赋值操作和表达式串联
+	*	访问OGNL上下文（OGNL context）和ActionContext(很重要)
+	*	操作集合对象
+
+
 ### 5.ValueStack(很简要) ###
 
 ### 6.Struts2标签 ###
