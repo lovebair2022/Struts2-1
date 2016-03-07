@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+	"http://struts.apache.org/dtds/struts-2.3.dtd">
+
+<struts>
+	<!-- 开启开发模式 -->
+	<constant name="struts.custom.i18n.resources" value="upload"></constant>
+	<!-- 常量配置的优先级高 -->
+	<constant name="struts.multipart.maxSize" value="5242880"></constant>
+    <constant name="struts.devMode" value="true" />
+    <package name="p1" extends="struts-default">
+    	<action name="upload1" class="com.itheima.action.Upload1Action" method="upload">
+    		<interceptor-ref name="defaultStack">
+    			<!-- 更改fileUpload拦截器的参数 -->
+    			<param name="fileUpload.maximumSize">5242880</param>
+    			<param name="fileUpload.allowedExtensions">.bmp,.jpg,.png</param>
+    		</interceptor-ref>
+    		<result>/success.jsp</result>
+    		<result name="input">/upload1.jsp</result>
+    	</action>
+    	<action name="upload2" class="com.itheima.action.Upload2Action" method="upload">
+    		<result>/success.jsp</result>
+    		<result name="input">/upload2.jsp</result>
+    	</action>
+    	<action name="download" class="com.itheima.action.DownLoadAction" method="download">
+    		<!-- 下载时由一个结果类型负责的 -->
+    		<result type="stream">
+    			<!-- 靠配置结果类型的参数 -->
+    			<param name="inputName">photoIn</param>
+    			<!-- 告知客户端以下载的方式打开 -->
+    			<!-- 动态获取下载的文件名：在该配置文件中使用OGNL表达式 。就相当于调用当前动作的getFilename方法-->
+    			<param name="contentDisposition">attachment;filename=${filename}</param>
+    			<!-- 告知客户端文件的MIME类型 -->
+    			<param name="contentType">application/octet-stream</param>
+    		</result>
+    	</action>
+    	<action name="download1" class="com.itheima.action.DownLoad1Action" method="download">
+    		<!-- 下载时由一个结果类型负责的 -->
+    		<result type="stream">
+    			<!-- 靠配置结果类型的参数：如果为in，有bug。wzt@itcast.cn -->
+    			<param name="inputName">in</param>
+    			<!-- 告知客户端以下载的方式打开 -->
+    			<!-- 动态获取下载的文件名：在该配置文件中使用OGNL表达式 。就相当于调用当前动作的getFilename方法-->
+    			<param name="contentDisposition">attachment;filename=${filename}</param>
+    			<!-- 告知客户端文件的MIME类型 -->
+    			<param name="contentType">application/octet-stream</param>
+    		</result>
+    	</action>
+    </package>
+</struts>

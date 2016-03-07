@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+	"http://struts.apache.org/dtds/struts-2.3.dtd">
+
+<struts>
+	<!-- 开启开发模式 -->
+    <constant name="struts.devMode" value="true" />
+    <!-- 允许ONGL表达式调用静态方法 -->
+    <constant name="struts.ognl.allowStaticMethodAccess" value="true"></constant>
+    <package name="p1" extends="struts-default">
+    	<action name="a1" class="com.itheima.action.Demo1Action">
+    		<result>/success.jsp</result>
+    	</action>
+    	<action name="a2" class="com.itheima.action.Demo2Action">
+    		<result>/success.jsp</result>
+    	</action>
+    	<action name="a3" class="com.itheima.action.Demo3Action">
+    		<result>/success.jsp</result>
+    	</action>
+    </package>
+</struts>

@@ -1202,4 +1202,45 @@ ObjectFactory：框架提供的默认的动作类创建工厂，返回的是动�
 
 ### 5.ValueStack(很简要) ###
 
+1、ValueStack的声明周期
+
+	每次动作访问都会创建一个ValueStack。动作类的实例声明周期也是每次访问时都创建。
+
+2、ValueStack和ActionContext的关系
+
+<center>![](https://raw.githubusercontent.com/faithyee/Struts2/master/img/51valueStack1.png)</center>
+ 
+	对于我们来说：
+	
+	通过ValueStack操作Map和栈(根)。
+	
+	具体看到这个值栈：<s:debug/>
+
+<center>![](https://raw.githubusercontent.com/faithyee/Struts2/master/img/52valueStack2.png)</center>
+	 
+	
+	明确概念：OGNL的contextMap。ValueStack是作为他的一个叫做根（实际上是一个List）的形式存在的。
+
+3、ValueStack常用的方法
+
+	void set(String key,Object value):先获取根栈栈顶的Map，如果不存在，压入一个新的Map，把key和value放到这个Map中。如果存在，直接放key和value。
+
+
+ <center>![](https://raw.githubusercontent.com/faithyee/Struts2/master/img/53valueStack3.png)</center>
+
+ <center>![](https://raw.githubusercontent.com/faithyee/Struts2/master/img/54valueStack4.png)</center>
+ 
+	void setValue(String ognlExp ,Object):String是一个OGNL表达式。如果表达式以#开头，操作contextMap。如果不是，设置根栈中对象的某个属性，从顶到尾依次搜寻
+
+
+ <center>![](https://raw.githubusercontent.com/faithyee/Struts2/master/img/55valueStack5.png)</center>
+ 
+	* Object findValue(String expr):参数是一个OGNL表达式。如果以#开头，从contextMap中找key值所对应的对象。如果不是以#开头，搜索根栈中对象的属性（getter方法）
+
+	特别注意：如果编写的表达式不是以#开头，先搜索根栈对象的所有属性，如果没有找到，会把它当做key值到contextMap中找。
+
+	* String findString(String expr):和findValue功能一样，但把OGNL表达式获取的对象转换成String
+
+
+
 ### 6.Struts2标签 ###
